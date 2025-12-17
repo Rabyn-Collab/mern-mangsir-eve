@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+  </head>
+
+  <body>
+
+
+
+    <form action="mailto:rabyn900@gmail.com" method="post" enctype="text/plain">
+
+
+      <p>
+        <label for="username">Username</label>
+        <input type="text" placeholder="JohnDoe" id="username" name="username">
+      </p>
+
+      <p>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+      </p>
+
+
+      <p>
+      <h4>Select Your Gender</h4>
+      <label for="male">Male</label>
+      <input type="radio" name="gender" value="male" id="male">
+      <label for="female">Female</label>
+      <input type="radio" name="gender" value="female" id="female">
+      </p>
+
+
+      <p>
+      <h4>Select Your Habits</h4>
+      <label for="sing">Sing</label>
+      <input type="checkbox" name="habits" value="sing" id="sing">
+      <label for="dance">Dance</label>
+      <input type="checkbox" name="habits" value="dance" id="dance">
+      </p>
+
+      <p>
+        <label for="date">Date of Joining: </label>
+        <input type="date" name="join" id="date">
+      </p>
+
+      <p>
+        <label for="country">Select Your Country: </label>
+        <select name="country" id="country">
+          <option value="nepal">Nepal</option>
+          <option value="india">India</option>
+          <option value="china">China</option>
+        </select>
+      </p>
+
+      <p>
+        <textarea placeholder="write a message" name="message" id="msg" rows="10" cols="30"></textarea>
+      </p>
+
+      <!-- <p>
+        <input type="datetime-local">
+      </p> -->
+
+
+
+
+      <button type="submit">Submit</button>
+      <button type="reset">Reset</button>
+
+
+
+
+
+    </form>
+
+
+
+
+  </body>
+
+</html>
