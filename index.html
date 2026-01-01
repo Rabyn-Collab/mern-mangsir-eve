@@ -104,7 +104,9 @@
       }
     </style>
 
+    <link rel="icon" href="assets/images/css_919826.png">
 
+    <script src="https://unpkg.com/scrollreveal"></script>
   </head>
 
   <body>
@@ -172,6 +174,21 @@
     </main>
 
 
+    <script>
+
+      const rev = ScrollReveal({
+        delay: 500,
+        duration: 500,
+        distance: '50px'
+      });
+      rev.reveal('.logo', { origin: 'left', });
+      rev.reveal('nav', { origin: 'right', });
+      rev.reveal('.house', { origin: 'left', interval: 100 });
+
+
+
+
+    </script>
 
 
 
