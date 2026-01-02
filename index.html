@@ -111,6 +111,11 @@
 
   <body>
 
+
+    <!-- <h5>Some text to enable scrolling</h5>
+
+    <button onclick="handelChange()">Click</button> -->
+
     <header>
       <div class="logo">
         <h4>BR</h4>
@@ -132,6 +137,8 @@
     </section>
 
     <main>
+
+
 
       <section class="projects">
         <h1>Projects</h1>
@@ -186,6 +193,14 @@
       rev.reveal('.house', { origin: 'left', interval: 100 });
 
 
+      const h5Element = document.querySelector('h5');
+
+      const handelChange = () => {
+
+        h5Element.style.fontSize = '50px';
+        h5Element.style.color = 'red';
+
+      }
 
 
     </script>
