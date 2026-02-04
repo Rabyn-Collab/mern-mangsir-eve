@@ -40,7 +40,7 @@ const pizzas = [
 
 export default function Menu() {
   return (
-    <div className="bg-black text-white py-24">
+    <div id="menu" className="bg-black text-white py-24">
 
       <h1 className="text-center text-5xl">THE MENU</h1>
 
