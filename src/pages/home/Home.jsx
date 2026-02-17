@@ -1,33 +1,30 @@
-import Menu from "../menu/Menu.jsx";
-
+import { Input } from "../../components/ui/input.jsx";
+import MealCategoryList from "../meals/MealCategoryList.jsx";
 
 export default function Home() {
   return (
     <div>
-      <div className=" h-180 bg-[url(https://www.w3schools.com/w3images/pizza.jpg)] bg-no-repeat bg-cover bg-center bg-[#EBE5E3] bg-blend-multiply flex flex-col items-center justify-center">
+      <div className="grid grid-cols-4 items-center">
+        <img src="https://www.themealdb.com/images/meal-icon.png" alt="" />
 
-
-        <div className="text-white text-center space-y-16">
-          <h1 className="text-7xl italic">THIN</h1>
-          <h1 className="text-7xl italic">CRUST PIZZA</h1>
-
-          <button className="bg-black hover:bg-sky-200 px-10 py-5">LET ME SEE THE MENU</button>
+        <div className="text-white text-center col-span-2 space-y-3">
+          <h1>Welcome to TheMealDB</h1>
+          <p>Welcome to TheMealDB: An open, crowd-sourced database of recipes from around the world.
+            We offer a free recipe API for anyone wanting to use it, with additional premium features if required.</p>
         </div>
 
-
-        <div className="absolute left-10 bottom-12">
-          <h1 className="bg-black px-10 py-4 text-white">OPEN FROM 10AM TO 10PM</h1>
-        </div>
-
-
-
-
-
-
+        <img src="https://www.themealdb.com/images/meal-icon.png" alt="" />
       </div>
 
-      <Menu />
+      <div className="flex justify-center mb-9">
+        <form className="max-w-2xl">
+          <Input
+            className="w-96 inline-block bg-white"
+            type="text" placeholder="Search" />
 
+        </form>
+      </div>
+      <MealCategoryList />
 
     </div>
   )
