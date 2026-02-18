@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { useNavigate } from "react-router";
 
 
 
@@ -18,6 +19,8 @@ export default function MealCategoryList() {
   const [data, setData] = useState();
   const [load, setLoad] = useState(false);
   const [err, setErr] = useState();
+
+  const nav = useNavigate();
 
 
   const getData = async () => {
@@ -50,6 +53,7 @@ export default function MealCategoryList() {
 
 
 
+
   return (
     <div className="grid grid-cols-4 gap-5">
 
@@ -71,7 +75,9 @@ export default function MealCategoryList() {
             </CardDescription>
           </CardHeader>
           <CardFooter>
-            <Button className="w-full">View Event</Button>
+            <Button
+              onClick={() => nav(`/items-list/${item.strCategory}`)}
+              className="w-full">View Event</Button>
           </CardFooter>
         </Card>
       })}
