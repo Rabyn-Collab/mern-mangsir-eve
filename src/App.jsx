@@ -4,6 +4,7 @@ import Home from "./pages/home/Home.jsx";
 import NotFound from "./pages/not-found/NotFound.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import ItemList from "./pages/meals/ItemList.jsx";
+import Meal from "./pages/meals/Meal.jsx";
 
 
 export default function App() {
@@ -23,6 +24,12 @@ export default function App() {
         {
           path: 'items-list/:label',
           element: <ItemList />,
+        },
+
+        {
+          path: 'meal/:id',
+          element: <Meal />
+
         },
 
 
