@@ -5,6 +5,8 @@ import NotFound from "./pages/not-found/NotFound.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import ItemList from "./pages/meals/ItemList.jsx";
 import Meal from "./pages/meals/Meal.jsx";
+import UseParams from "./pages/params/UseParams.jsx";
+import UseSearchParams from "./pages/params/UseSearchParams.jsx";
 
 
 export default function App() {
@@ -31,6 +33,19 @@ export default function App() {
           element: <Meal />
 
         },
+
+        {
+          path: 'use-params/:id',
+          element: <UseParams />
+        },
+
+        {
+          path: 'searchParams',
+          element: <UseSearchParams />
+
+        },
+
+
 
 
         {
