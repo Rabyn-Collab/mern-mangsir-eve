@@ -68,9 +68,6 @@
 
 }
 
-body {
-  @apply bg-[#1E1B17];
-}
 
 @layer components {
 

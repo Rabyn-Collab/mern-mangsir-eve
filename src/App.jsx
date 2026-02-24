@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import Home from "./pages/home/Home.jsx";
 import NotFound from "./pages/not-found/NotFound.jsx";
 import RootLayout from "./components/RootLayout.jsx";
+import AddForm from "./pages/form/add/AddForm.jsx";
 
 
 
@@ -18,6 +19,10 @@ export default function App() {
           index: true,
           element: <Home />,
 
+        },
+        {
+          path: 'form/add',
+          element: <AddForm />,
         },
 
 
