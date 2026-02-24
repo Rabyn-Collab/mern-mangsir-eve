@@ -1,7 +1,12 @@
+import { useNavigate } from "react-router";
 import { Input } from "../../components/ui/input.jsx";
 import MealCategoryList from "../meals/MealCategoryList.jsx";
 
 export default function Home() {
+
+
+  const nav = useNavigate();
+
   return (
     <div>
       <div className="grid grid-cols-4 items-center">
@@ -17,8 +22,11 @@ export default function Home() {
       </div>
 
       <div className="flex justify-center mb-9">
-        <form className="max-w-2xl">
+        <form action={(formData) => {
+          nav(`/search?s=${formData.get('search')}`);
+        }} className="max-w-2xl">
           <Input
+            name="search"
             className="w-96 inline-block bg-white"
             type="text" placeholder="Search" />
 

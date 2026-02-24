@@ -7,6 +7,7 @@ import ItemList from "./pages/meals/ItemList.jsx";
 import Meal from "./pages/meals/Meal.jsx";
 import UseParams from "./pages/params/UseParams.jsx";
 import UseSearchParams from "./pages/params/UseSearchParams.jsx";
+import Search from "./pages/meals/Search.jsx";
 
 
 export default function App() {
@@ -32,6 +33,11 @@ export default function App() {
           path: 'meal/:id',
           element: <Meal />
 
+        },
+
+        {
+          path: 'search',
+          element: <Search />
         },
 
         {

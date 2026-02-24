@@ -1,41 +1,11 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router"
-import { baseUrl } from "../../lib/constants.js";
-import axios from "axios";
+import { useApi } from "../../hooks/apiHook.js";
 
 export default function Meal() {
   const { id } = useParams();
 
-  const [data, setData] = useState();
-  const [load, setLoad] = useState(false);
-  const [err, setErr] = useState();
+  const [data, load, err] = useApi('lookup.php', { i: id });
 
-
-
-  const getData = async () => {
-    try {
-      setLoad(true);
-      const response = await axios.get(`${baseUrl}/lookup.php`, {
-        params: {
-          i: id
-        }
-      });
-
-      setData(response.data);
-      setLoad(false);
-
-    } catch (err) {
-      setErr(err.message);
-      setLoad(false);
-
-    }
-  }
-
-
-  useEffect(() => {
-    getData();
-
-  }, []);
 
   if (load) {
     return <h1>Loading...</h1>
