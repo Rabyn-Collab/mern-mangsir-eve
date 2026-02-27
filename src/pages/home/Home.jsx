@@ -1,13 +1,13 @@
+import { useSelector } from "react-redux"
 
 export default function Home() {
 
+  const { users } = useSelector((state) => state.userSlice);
 
-  // const numbers = [11, 22, 33, 44, 55];
-
-  // console.log([...numbers, 99, 100]);
+  console.log(users);
 
 
-  const persons = ['ram', 'shyam', 'hari', 'rita'];
+
 
   return (
     <div>

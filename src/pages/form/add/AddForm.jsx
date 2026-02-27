@@ -13,7 +13,10 @@ import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group.j
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../../components/ui/select.jsx"
 import { Textarea } from "../../../components/ui/textarea.jsx"
 import * as Yup from "yup";
-import { useState } from "react"
+import { useNavigate } from "react-router"
+import { useDispatch } from "react-redux"
+import { setUser } from "./userSlice.js"
+import { nanoid } from "@reduxjs/toolkit"
 
 
 const valSchema = Yup.object({
@@ -35,10 +38,8 @@ const valSchema = Yup.object({
 
 export default function AddForm() {
 
-  const [data, setData] = useState([]);
-
-  console.log(data);
-
+  const nav = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -68,9 +69,13 @@ export default function AddForm() {
               // imageReview: ''
             }}
             onSubmit={(val, { resetForm }) => {
+              dispatch(setUser({
+                ...val,
+                id: nanoid()
+              }));
+              nav(-1);
 
-              setData([...data, val]);
-              resetForm();
+
 
             }}
 
