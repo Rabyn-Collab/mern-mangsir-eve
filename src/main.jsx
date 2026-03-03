@@ -3,11 +3,19 @@ import './index.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { store } from './app/store.js'
+import { Toaster } from './components/ui/sonner.jsx'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
 
     <App />
+    <Toaster
+
+      duration={700}
+      position='top-center'
+
+
+    />
 
   </Provider>
 

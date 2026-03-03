@@ -4,6 +4,7 @@ import Home from "./pages/home/Home.jsx";
 import NotFound from "./pages/not-found/NotFound.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import AddForm from "./pages/form/add/AddForm.jsx";
+import UpdateForm from "./pages/form/update/UpdateForm.jsx";
 
 
 
@@ -23,6 +24,11 @@ export default function App() {
         {
           path: 'form/add',
           element: <AddForm />,
+        },
+        {
+          path: 'form/update/:id',
+          element: <UpdateForm />,
+
         },
 
 

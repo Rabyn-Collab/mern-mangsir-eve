@@ -12,31 +12,20 @@ import { Formik } from "formik"
 import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group.jsx"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../../components/ui/select.jsx"
 import { Textarea } from "../../../components/ui/textarea.jsx"
-import * as Yup from "yup";
-import { useNavigate } from "react-router"
-import { useDispatch } from "react-redux"
-import { setUser } from "../userSlice.js"
-import { nanoid } from "@reduxjs/toolkit"
+import { useNavigate, useParams } from "react-router"
+import { useDispatch, useSelector } from "react-redux"
+import { valSchema } from "../add/AddForm.jsx"
+import { toast } from "sonner"
+import { updateUser } from "../userSlice.js"
 
 
-export const valSchema = Yup.object({
-  username: Yup.string().min(4).max(20).required('username is required'),
-  email: Yup.string().email().required(),
-  gender: Yup.string().required(),
-  country: Yup.string().required(),
-  detail: Yup.string().min(10).max(500).required(),
-  // image: Yup
-  //   .mixed()
-  //   .test("fileSize", "The file is too large", (value) => value && value.size <= 2 * 1024 * 1024)
-  //   .test('fileType', 'Unsupported file type', (val) => {
-  //     return val && ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif'].includes(val.type);
-  //   })
-  //   .required()
-
-});
 
 
-export default function AddForm() {
+export default function UpdateForm() {
+  const { id } = useParams();
+  const { users } = useSelector((state) => state.userSlice);
+  const user = users.find((user) => user.id === id);
+
 
   const nav = useNavigate();
   const dispatch = useDispatch();
@@ -47,7 +36,7 @@ export default function AddForm() {
 
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Add Some</CardTitle>
+          <CardTitle>Update Some</CardTitle>
           <CardDescription>
             Enter your details
           </CardDescription>
@@ -60,20 +49,22 @@ export default function AddForm() {
 
           <Formik
             initialValues={{
-              username: '',
-              email: '',
-              gender: '',
-              country: '',
-              detail: '',
-              // image: '',
-              // imageReview: ''
+              username: user.username,
+              email: user.email,
+              gender: user.gender,
+              country: user.country,
+              detail: user.detail,
+
             }}
             onSubmit={(val, { resetForm }) => {
-              dispatch(setUser({
+              dispatch(updateUser({
                 ...val,
-                id: nanoid()
+                id
               }));
               nav(-1);
+
+              toast.success('User Updated Successfully');
+
 
 
 
@@ -126,6 +117,7 @@ export default function AddForm() {
                     <h4>Select Your Gender</h4>
 
                     <RadioGroup
+                      value={values.gender}
                       onValueChange={(val) => {
                         setFieldValue('gender', val);
                       }}
@@ -149,6 +141,7 @@ export default function AddForm() {
                   <div>
                     <h4>Select Your Country</h4>
                     <Select
+                      value={values.country}
                       onValueChange={(val) => {
                         setFieldValue('country', val);
                       }}
@@ -185,22 +178,7 @@ export default function AddForm() {
                   </div>
 
 
-                  {/* <div className="grid gap-2">
-                    <Label htmlFor="image">Select an Image</Label>
 
-                    <Input
-                      name='image'
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        setFieldValue('imageReview', URL.createObjectURL(file));
-                        setFieldValue('image', file);
-                      }}
-                      type="file"
-                    />
-
-                    {values.imageReview && !errors.image && <img src={values.imageReview} alt="" className="w-64 h-48" />}
-                    {errors.image && touched.image && <p className="text-red-500">{errors.image}</p>}
-                  </div> */}
 
 
 

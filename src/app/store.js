@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "../pages/form/add/userSlice.js";
+import { userSlice } from "../pages/form/userSlice.js";
 
 
 
