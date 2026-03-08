@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "../pages/form/userSlice.js";
+import { bookApi } from "../pages/books/bookApi.js";
 
 
 
@@ -7,6 +7,10 @@ import { userSlice } from "../pages/form/userSlice.js";
 
 export const store = configureStore({
   reducer: {
-    [userSlice.name]: userSlice.reducer
-  }
+    [bookApi.reducerPath]: bookApi.reducer
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat([
+      bookApi.middleware
+    ]),
 });
