@@ -9,37 +9,30 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Formik } from "formik"
-import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group.jsx"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../../components/ui/select.jsx"
 import { Textarea } from "../../../components/ui/textarea.jsx"
 import * as Yup from "yup";
 import { useNavigate } from "react-router"
-import { useDispatch } from "react-redux"
-import { setUser } from "../userSlice.js"
-import { nanoid } from "@reduxjs/toolkit"
+import { useAddBookMutation } from "../../books/bookApi.js"
+import { Spinner } from "../../../components/ui/spinner.jsx"
+import { toast } from "sonner"
+
 
 
 export const valSchema = Yup.object({
-  username: Yup.string().min(4).max(20).required('username is required'),
-  email: Yup.string().email().required(),
-  gender: Yup.string().required(),
-  country: Yup.string().required(),
-  detail: Yup.string().min(10).max(500).required(),
-  // image: Yup
-  //   .mixed()
-  //   .test("fileSize", "The file is too large", (value) => value && value.size <= 2 * 1024 * 1024)
-  //   .test('fileType', 'Unsupported file type', (val) => {
-  //     return val && ['image/jpeg', 'image/png', 'image/jpg', 'image/webp', 'image/gif'].includes(val.type);
-  //   })
-  //   .required()
+  title: Yup.string().required("Required"),
+  detail: Yup.string().required("Required"),
+  image: Yup.string().url().required("Required"),
+  author: Yup.string().required("Required"),
 
 });
 
 
 export default function AddForm() {
 
+  const [addBook, { isLoading }] = useAddBookMutation();
+
   const nav = useNavigate();
-  const dispatch = useDispatch();
+
 
   return (
     <div>
@@ -47,9 +40,9 @@ export default function AddForm() {
 
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Add Some</CardTitle>
+          <CardTitle>Add Book</CardTitle>
           <CardDescription>
-            Enter your details
+            Enter  details
           </CardDescription>
 
         </CardHeader>
@@ -60,22 +53,21 @@ export default function AddForm() {
 
           <Formik
             initialValues={{
-              username: '',
-              email: '',
-              gender: '',
-              country: '',
-              detail: '',
-              // image: '',
-              // imageReview: ''
+              title: "",
+              detail: "",
+              image: "",
+              author: "",
+
             }}
-            onSubmit={(val, { resetForm }) => {
-              dispatch(setUser({
-                ...val,
-                id: nanoid()
-              }));
-              nav(-1);
+            onSubmit={async (val) => {
+              try {
+                await addBook(val).unwrap();
+                toast.success("Book added");
+                nav(-1);
+              } catch (err) {
+                toast.error(err.data);
 
-
+              }
 
             }}
 
@@ -92,82 +84,54 @@ export default function AddForm() {
 
 
                   <div className="grid gap-2">
-                    <Label htmlFor="username">Username</Label>
+                    <Label htmlFor="title">Title</Label>
 
                     <Input
-                      name='username'
-                      value={values.username}
+                      name='title'
+                      value={values.title}
                       onChange={handleChange}
-                      id="username"
+                      id="title"
                       type="text"
-                      placeholder="John Doe"
+                      placeholder="Title"
 
                     />
-                    {errors.username && touched.username && <p className="text-red-500">{errors.username}</p>}
+                    {errors.title && touched.title && <p className="text-red-500">{errors.title}</p>}
                   </div>
 
 
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="author">Author</Label>
 
                     <Input
-                      name='email'
-                      value={values.email}
+                      name='author'
+                      value={values.author}
                       onChange={handleChange}
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
+                      id="author"
+                      type="text"
+                      placeholder="John Doe"
 
                     />
-                    {errors.email && touched.email && <p className="text-red-500">{errors.email}</p>}
+                    {errors.author && touched.author && <p className="text-red-500">{errors.author}</p>}
                   </div>
 
-                  <div>
-                    <h4>Select Your Gender</h4>
+                  <div className="grid gap-2">
+                    <Label htmlFor="image">Image Url</Label>
 
-                    <RadioGroup
-                      onValueChange={(val) => {
-                        setFieldValue('gender', val);
-                      }}
-                      defaultValue="comfortable" className="w-fit mt-3">
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value="male" id="r1" />
-                        <Label htmlFor="r1">Male</Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value="female" id="r2" />
-                        <Label htmlFor="r2">Female</Label>
-                      </div>
+                    <Input
+                      name='image'
+                      value={values.image}
+                      onChange={handleChange}
+                      id="image"
+                      type="url"
+                      placeholder="https://example.com/image.jpg"
 
-                    </RadioGroup>
-                    {errors.gender && touched.gender && <p className="text-red-500">{errors.gender}</p>}
-
-
-
+                    />
+                    {errors.image && touched.image && <p className="text-red-500">{errors.image}</p>}
                   </div>
 
-                  <div>
-                    <h4>Select Your Country</h4>
-                    <Select
-                      onValueChange={(val) => {
-                        setFieldValue('country', val);
-                      }}
 
-                    >
-                      <SelectTrigger className="w-full max-w-48 mt-2">
-                        <SelectValue placeholder="Select a country" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
 
-                          <SelectItem value="nepal">Nepal</SelectItem>
-                          <SelectItem value="india">India</SelectItem>
-                          <SelectItem value="china">China</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    {errors.country && touched.country && <p className="text-red-500">{errors.country}</p>}
-                  </div>
+
 
                   <div className="grid gap-2">
                     <Label htmlFor="detail">Detail</Label>
@@ -185,30 +149,17 @@ export default function AddForm() {
                   </div>
 
 
-                  {/* <div className="grid gap-2">
-                    <Label htmlFor="image">Select an Image</Label>
 
-                    <Input
-                      name='image'
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        setFieldValue('imageReview', URL.createObjectURL(file));
-                        setFieldValue('image', file);
-                      }}
-                      type="file"
-                    />
-
-                    {values.imageReview && !errors.image && <img src={values.imageReview} alt="" className="w-64 h-48" />}
-                    {errors.image && touched.image && <p className="text-red-500">{errors.image}</p>}
-                  </div> */}
 
 
 
 
 
                 </div>
-                <Button type="submit" className="w-full mt-5">
-                  Submit
+                <Button
+                  disabled={isLoading}
+                  type="submit" className="w-full mt-5">
+                  {isLoading ? <Spinner /> : "Add Book"}
                 </Button>
               </form>
             }}

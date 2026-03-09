@@ -15,8 +15,18 @@ export const bookApi = createApi({
       query: () => ({
         url: '/books',
         method: 'GET'
-      })
+      }),
+      providesTags: ['Book']
 
+    }),
+
+    addBook: builder.mutation({
+      query: (data) => ({
+        url: '/books',
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: ['Book']
     })
 
 
@@ -27,4 +37,4 @@ export const bookApi = createApi({
 });
 
 
-export const { useGetBooksQuery, useLazyGetBooksQuery } = bookApi;
+export const { useGetBooksQuery, useLazyGetBooksQuery, useAddBookMutation } = bookApi;
