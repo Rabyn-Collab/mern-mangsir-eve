@@ -9,26 +9,30 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Formik } from "formik"
-import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group.jsx"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "../../../components/ui/select.jsx"
 import { Textarea } from "../../../components/ui/textarea.jsx"
 import { useNavigate, useParams } from "react-router"
-import { useDispatch, useSelector } from "react-redux"
-import { valSchema } from "../add/AddForm.jsx"
+import { Spinner } from "../../../components/ui/spinner.jsx"
 import { toast } from "sonner"
-import { updateUser } from "../userSlice.js"
+import { valSchema } from "../add/AddForm.jsx"
+import { useGetBookQuery, useUpdateBookMutation } from "../../books/bookApi.js"
+
 
 
 
 
 export default function UpdateForm() {
+
   const { id } = useParams();
-  const { users } = useSelector((state) => state.userSlice);
-  const user = users.find((user) => user.id === id);
-
-
   const nav = useNavigate();
-  const dispatch = useDispatch();
+  const { isLoading, data, error } = useGetBookQuery(id);
+  const [updateBook, { isLoading: updateLoading }] = useUpdateBookMutation();
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error.data}</div>
+
+
+
+
 
   return (
     <div>
@@ -36,9 +40,9 @@ export default function UpdateForm() {
 
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Update Some</CardTitle>
+          <CardTitle>Edit Book</CardTitle>
           <CardDescription>
-            Enter your details
+            Enter  details
           </CardDescription>
 
         </CardHeader>
@@ -49,23 +53,21 @@ export default function UpdateForm() {
 
           <Formik
             initialValues={{
-              username: user.username,
-              email: user.email,
-              gender: user.gender,
-              country: user.country,
-              detail: user.detail,
+              title: data.title,
+              detail: data.detail,
+              image: data.image,
+              author: data.author,
 
             }}
-            onSubmit={(val, { resetForm }) => {
-              dispatch(updateUser({
-                ...val,
-                id
-              }));
-              nav(-1);
+            onSubmit={async (val) => {
 
-              toast.success('User Updated Successfully');
-
-
+              try {
+                await updateBook({ id, data: val }).unwrap();
+                toast.success("Book updated successfully");
+                nav(-1);
+              } catch (err) {
+                toast.error(err.data);
+              }
 
 
             }}
@@ -75,7 +77,7 @@ export default function UpdateForm() {
           >
 
 
-            {({ handleChange, handleSubmit, values, errors, touched, setFieldValue }) => {
+            {({ handleChange, handleSubmit, values, errors, touched }) => {
               return <form
                 onSubmit={handleSubmit}
               >
@@ -83,84 +85,54 @@ export default function UpdateForm() {
 
 
                   <div className="grid gap-2">
-                    <Label htmlFor="username">Username</Label>
+                    <Label htmlFor="title">Title</Label>
 
                     <Input
-                      name='username'
-                      value={values.username}
+                      name='title'
+                      value={values.title}
                       onChange={handleChange}
-                      id="username"
+                      id="title"
                       type="text"
-                      placeholder="John Doe"
+                      placeholder="Title"
 
                     />
-                    {errors.username && touched.username && <p className="text-red-500">{errors.username}</p>}
+                    {errors.title && touched.title && <p className="text-red-500">{errors.title}</p>}
                   </div>
 
 
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="author">Author</Label>
 
                     <Input
-                      name='email'
-                      value={values.email}
+                      name='author'
+                      value={values.author}
                       onChange={handleChange}
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
+                      id="author"
+                      type="text"
+                      placeholder="John Doe"
 
                     />
-                    {errors.email && touched.email && <p className="text-red-500">{errors.email}</p>}
+                    {errors.author && touched.author && <p className="text-red-500">{errors.author}</p>}
                   </div>
 
-                  <div>
-                    <h4>Select Your Gender</h4>
+                  <div className="grid gap-2">
+                    <Label htmlFor="image">Image Url</Label>
 
-                    <RadioGroup
-                      value={values.gender}
-                      onValueChange={(val) => {
-                        setFieldValue('gender', val);
-                      }}
-                      defaultValue="comfortable" className="w-fit mt-3">
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value="male" id="r1" />
-                        <Label htmlFor="r1">Male</Label>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <RadioGroupItem value="female" id="r2" />
-                        <Label htmlFor="r2">Female</Label>
-                      </div>
+                    <Input
+                      name='image'
+                      value={values.image}
+                      onChange={handleChange}
+                      id="image"
+                      type="url"
+                      placeholder="https://example.com/image.jpg"
 
-                    </RadioGroup>
-                    {errors.gender && touched.gender && <p className="text-red-500">{errors.gender}</p>}
-
-
-
+                    />
+                    {errors.image && touched.image && <p className="text-red-500">{errors.image}</p>}
                   </div>
 
-                  <div>
-                    <h4>Select Your Country</h4>
-                    <Select
-                      value={values.country}
-                      onValueChange={(val) => {
-                        setFieldValue('country', val);
-                      }}
 
-                    >
-                      <SelectTrigger className="w-full max-w-48 mt-2">
-                        <SelectValue placeholder="Select a country" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
 
-                          <SelectItem value="nepal">Nepal</SelectItem>
-                          <SelectItem value="india">India</SelectItem>
-                          <SelectItem value="china">China</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    {errors.country && touched.country && <p className="text-red-500">{errors.country}</p>}
-                  </div>
+
 
                   <div className="grid gap-2">
                     <Label htmlFor="detail">Detail</Label>
@@ -185,8 +157,10 @@ export default function UpdateForm() {
 
 
                 </div>
-                <Button type="submit" className="w-full mt-5">
-                  Submit
+                <Button
+                  disabled={updateLoading}
+                  type="submit" className="w-full mt-5">
+                  {updateLoading ? <Spinner /> : "Update Book"}
                 </Button>
               </form>
             }}

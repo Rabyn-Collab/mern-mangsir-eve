@@ -1,8 +1,12 @@
+import { EditIcon } from "lucide-react";
+import { Button } from "../../components/ui/button.jsx";
 import { Card, CardContent, CardHeader } from "../../components/ui/card.jsx";
 import { useGetBooksQuery } from "../books/bookApi.js"
+import RemoveBook from "../../components/RemoveBook.jsx";
+import { useNavigate } from "react-router";
 
 export default function Home() {
-
+  const nav = useNavigate();
   const { data, isLoading, error } = useGetBooksQuery();
 
   if (isLoading) return <div>Loading...</div>
@@ -38,6 +42,18 @@ export default function Home() {
                 Author: {item.author}
               </div>
             </CardContent>
+
+            <div className="flex gap-5 justify-end pr-5">
+              <Button
+                onClick={() => nav(`/form/update/${item.id}`)}
+              >
+                <EditIcon />
+              </Button>
+
+              <RemoveBook id={item.id} />
+
+
+            </div>
           </Card>
         ))}
       </div>
