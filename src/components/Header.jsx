@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <div className="flex  items-baseline justify-between px-5">
 
-      <h1>Language Converter</h1>
+      <h1>Apis</h1>
 
 
 
