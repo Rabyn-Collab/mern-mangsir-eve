@@ -1,9 +1,12 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router-dom";
 import Home from "./pages/home/Home.jsx";
-import NotFound from "./pages/not-found/NotFound.jsx";
+const NotFound = lazy(() => import("./pages/not-found/NotFound.jsx"));
 import RootLayout from "./components/RootLayout.jsx";
-import AddForm from "./pages/form/AddForm.jsx";
+const AddForm = lazy(() => import("./pages/form/AddForm.jsx"));
+const About = lazy(() => import("./pages/about/About.jsx"));
+
 
 
 export default function App() {
@@ -17,6 +20,10 @@ export default function App() {
         {
           index: true,
           element: <Home />,
+        },
+        {
+          path: 'about',
+          element: <About />
         },
         {
           path: 'add-form',
@@ -36,5 +43,7 @@ export default function App() {
 
   ]);
 
-  return <RouterProvider router={router} />
+  return <Suspense fallback={<div>Loading...</div>}>
+    <RouterProvider router={router} />
+  </Suspense>
 }

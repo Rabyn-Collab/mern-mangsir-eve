@@ -1,28 +1,10 @@
-import { useContext } from "react"
-import { TodoContext } from "../../context/TodoContext.jsx"
-
-
 export default function Home() {
-
-  const { todos } = useContext(TodoContext);
-
   return (
     <div>
 
-      <h1>Hello Jee</h1>
 
-
-
-
-
-      {todos.map((todo, index) => (
-        <div key={index}>
-          <h2>{todo.username}</h2>
-          <p>{todo.email}</p>
-        </div>
-      ))}
-
-
+      <h1>This is home page</h1>
+      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Praesentium vero laborum ullam odit magni quae amet porro fugiat quis. Ipsam tempora voluptatum quasi ipsa maxime molestiae libero rem, esse officiis.</p>
     </div>
   )
 }

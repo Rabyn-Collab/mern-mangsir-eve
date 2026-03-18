@@ -5,7 +5,7 @@ export default function Header() {
     <div className="flex  items-baseline justify-between px-5">
 
       <h1>Apis</h1>
-
+      <NavLink to={'/about'}>About</NavLink>
       <NavLink to={'/add-form'}>Add Form</NavLink>
 
 
