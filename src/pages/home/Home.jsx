@@ -1,15 +1,28 @@
-import { useGetProductsQuery } from "../../local/products/productApi.js"
+import { useContext } from "react"
+import { TodoContext } from "../../context/TodoContext.jsx"
+
 
 export default function Home() {
 
-  const { isLoading, error, data } = useGetProductsQuery();
-
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>{error.data}</div>
-
-  console.log(data);
+  const { todos } = useContext(TodoContext);
 
   return (
-    <div>Home</div>
+    <div>
+
+      <h1>Hello Jee</h1>
+
+
+
+
+
+      {todos.map((todo, index) => (
+        <div key={index}>
+          <h2>{todo.username}</h2>
+          <p>{todo.email}</p>
+        </div>
+      ))}
+
+
+    </div>
   )
 }

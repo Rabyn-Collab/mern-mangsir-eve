@@ -6,6 +6,8 @@ export default function Header() {
 
       <h1>Apis</h1>
 
+      <NavLink to={'/add-form'}>Add Form</NavLink>
+
 
 
 
