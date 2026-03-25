@@ -1,36 +1,46 @@
-import fs from "fs";
+import express from 'express';
 
 
-if (fs.existsSync('./uploads')) {
-  fs.rmdir('./uploads', (err) => {
-    console.log(err);
+const app = express();
+
+
+app.use(express.json());
+
+
+app.get('/', (req, res) => {
+
+  console.log(req.body);
+  const { number } = req.query;
+
+  const oddEven = Number(number) % 2 === 0 ? 'even' : 'odd';
+  return res.status(200).json({
+    message: oddEven
   });
-} else {
-  fs.mkdir('./uploads', (err) => {
-    console.log(err);
+});
+
+
+app.use('/hello', (req, res, next) => {
+  console.log('hello jee');
+
+  next();
+
+})
+
+
+app.get('/hello', (req, res) => {
+  return res.status(200).json({
+    message: 'hello'
   });
-}
-
-// fs.mkdir('./uploads', (err) => {
-
-// });
+});
 
 
+app.get('/bye', (req, res) => {
+  return res.status(200).json({
+    message: 'bye'
+  });
+});
 
-// const m = fs.readFileSync('./dummy.txt', 'utf-8');
-// console.log(m);
 
-// fs.readFile('./dummy.txt', 'utf-8', (err, data) => {
-
-//   console.log(data);
-
-// });
-
-// fs.writeFile('./dummy.txt', 'hello jee', (err) => {
-//   console.log(err);
-// });
-
-// fs.appendFile('./dummy.txt', ' hello jee', (err) => {
-//   console.log(err);
-// });
-
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
+})

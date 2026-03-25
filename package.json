@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/Rabyn-Collab/mern-mangsir-eve/issues"
   },
-  "homepage": "https://github.com/Rabyn-Collab/mern-mangsir-eve#readme"
+  "homepage": "https://github.com/Rabyn-Collab/mern-mangsir-eve#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.2",
+    "morgan": "^1.10.1"
+  }
 }
