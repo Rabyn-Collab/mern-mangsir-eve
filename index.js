@@ -2,9 +2,20 @@ import express from 'express';
 import morgan from 'morgan';
 import productRoutes from './routes/productRoutes.js';
 import mongoose from 'mongoose';
-
+import fileUpload from 'express-fileupload';
 
 const app = express();
+
+app.use(express.json());
+
+app.use(morgan('dev'));
+
+app.use(fileUpload({
+  limits: { fileSize: 5 * 1024 * 1024 },
+}));
+
+
+
 
 mongoose.connect('mongodb+srv://rabyn900:moles900@cluster0.ikwdezp.mongodb.net/Shopping').then((val) => {
 
@@ -14,11 +25,6 @@ mongoose.connect('mongodb+srv://rabyn900:moles900@cluster0.ikwdezp.mongodb.net/S
 }).catch((err) => {
   console.log(err);
 });
-
-
-
-app.use(express.json());
-app.use(morgan('dev'));
 
 
 app.get('/', (req, res) => {
