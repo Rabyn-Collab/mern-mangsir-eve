@@ -22,7 +22,7 @@ export const brands = [
 ];
 
 const productSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -48,7 +48,7 @@ const productSchema = new mongoose.Schema({
     enum: categories,
     required: true,
   },
-  countInStock: {
+  stock: {
     type: Number,
     required: true,
   },

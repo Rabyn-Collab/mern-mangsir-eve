@@ -2,11 +2,12 @@ import express from "express";
 import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } from "../controllers/productController.js";
 import { methodNotAllow } from "../utils/methodNotAllow.js";
 import mongoose from "mongoose";
+import { fileCheck } from "../middlewares/fileCheck.js";
 
 const router = express.Router();
 
 
-router.route('/').get(getProducts).post(createProduct).all(methodNotAllow);
+router.route('/').get(getProducts).post(fileCheck, createProduct).all(methodNotAllow);
 
 
 router.param('id', (req, res, next, id) => {
