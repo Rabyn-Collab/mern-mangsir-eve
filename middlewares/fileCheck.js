@@ -31,6 +31,35 @@ export const fileCheck = (req, res, next) => {
 
 
 
+}
+
+
+
+export const updatefileCheck = (req, res, next) => {
+  const file = req.files?.image;
+
+  if (!file) {
+    return next();
+  }
+
+  const exts = path.extname(file.name);
+
+  if (!supportedTypes.includes(exts)) {
+    return res.status(400).json({ message: 'Unsupported file type' });
+  }
+
+  const imagePath = `${uuidv4()}-${file.name}`;
+
+  file.mv(`./uploads/${imagePath}`, (err) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    } else {
+      req.imagePath = imagePath;
+      next();
+    }
+  });
+
+
 
 
 }

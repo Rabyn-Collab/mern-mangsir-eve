@@ -2,7 +2,7 @@ import express from "express";
 import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } from "../controllers/productController.js";
 import { methodNotAllow } from "../utils/methodNotAllow.js";
 import mongoose from "mongoose";
-import { fileCheck } from "../middlewares/fileCheck.js";
+import { fileCheck, updatefileCheck } from "../middlewares/fileCheck.js";
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.param('id', (req, res, next, id) => {
   next();
 });
 
-router.route('/:id').get(getProduct).patch(updateProduct).delete(deleteProduct).all(methodNotAllow);
+router.route('/:id').get(getProduct).patch(updatefileCheck, updateProduct).delete(deleteProduct).all(methodNotAllow);
 
 
 
