@@ -1,5 +1,4 @@
 import Product from "../models/Product.js";
-import fs from 'fs';
 import { removeFile } from "../utils/removeFile.js";
 
 
