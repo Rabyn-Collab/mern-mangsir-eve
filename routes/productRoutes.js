@@ -3,11 +3,12 @@ import { createProduct, deleteProduct, getProduct, getProducts, updateProduct } 
 import { methodNotAllow } from "../utils/methodNotAllow.js";
 import mongoose from "mongoose";
 import { fileCheck, updatefileCheck } from "../middlewares/fileCheck.js";
+import { adminCheck, checkUser } from "../middlewares/userCheck.js";
 
 const router = express.Router();
 
 
-router.route('/').get(getProducts).post(fileCheck, createProduct).all(methodNotAllow);
+router.route('/').get(getProducts).post(checkUser, adminCheck, fileCheck, createProduct).all(methodNotAllow);
 
 
 router.param('id', (req, res, next, id) => {
@@ -19,7 +20,7 @@ router.param('id', (req, res, next, id) => {
   next();
 });
 
-router.route('/:id').get(getProduct).patch(updatefileCheck, updateProduct).delete(deleteProduct).all(methodNotAllow);
+router.route('/:id').get(getProduct).patch(checkUser, adminCheck, updatefileCheck, updateProduct).delete(checkUser, adminCheck, deleteProduct).all(methodNotAllow);
 
 
 
