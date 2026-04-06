@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router"
 import { RouterProvider } from "react-router-dom";
-import NotFound from "./pages/not-found/NotFound.jsx";
 import RootLayout from "./components/RootLayout.jsx";
 import Home from "./features/home/Home.jsx";
+import Login from "./features/auth/Login.jsx";
+import Register from "./features/auth/Register.jsx";
 
 
 export default function App() {
@@ -19,14 +20,18 @@ export default function App() {
 
         },
 
-
-
-
         {
-          path: '*',
-          element: <NotFound />
-
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'register',
+          element: <Register />
         }
+
+
+
+
 
 
       ]

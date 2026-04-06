@@ -5,14 +5,14 @@
 
 
 
-export const setUserToLocal = (users) => {
-  localStorage.setItem('users', JSON.stringify(users));
+export const setUserToLocal = (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
 }
 
 
 
 export const getUserFromLocal = () => {
-  const users = localStorage.getItem('users');
-  return users === null ? [] : JSON.parse(users);
+  const user = localStorage.getItem('user');
+  return user === null ? null : JSON.parse(user);
 
 }
