@@ -1,18 +1,88 @@
-import Product from "../models/Product.js";
+import Product, { brands, categories } from "../models/Product.js";
 import { removeFile } from "../utils/removeFile.js";
+
+function convertQuery(queryObj) {
+  const mongoQuery = {};
+
+  for (const key in queryObj) {
+    const match = key.match(/(\w+)\[(\w+)\]/);
+
+    if (match) {
+      const field = match[1];      // rating
+      const operator = match[2];   // gt
+
+      if (!mongoQuery[field]) mongoQuery[field] = {};
+
+      mongoQuery[field][`$${operator}`] = Number(queryObj[key]);
+    } else {
+      mongoQuery[key] = queryObj[key];
+    }
+  }
+
+  return mongoQuery;
+}
 
 
 export const getProducts = async (req, res) => {
-
+  const queryObj = { ...req.query };
+  const excludeFileds = ['page', 'sort', 'limit', 'fields', 'search'];
   try {
-    const products = await Product.find({});
-    return res.status(200).json(products);
+
+    excludeFileds.forEach(el => delete queryObj[el]);
+
+
+    const mongoQuery = convertQuery(queryObj);
+    let query = Product.find(mongoQuery);
+
+    if (req.query.search) {
+      const search = req.query.search;
+
+      if (categories.some((n) => n.toLowerCase().includes(search.toLowerCase()))) {
+
+        query.find({ category: { $regex: search, $options: "i" } });
+
+      } else if (brands.some((n) => n.toLowerCase().includes(search.toLowerCase()))) {
+        query.find({ brand: { $regex: search, $options: "i" } });
+      } else {
+        query.find({ title: { $regex: search, $options: "i" } });
+      }
+
+
+    }
+
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    }
+
+
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    }
+
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const products = await query.skip(skip).limit(limit);
+
+    const total = await Product.countDocuments({});
+    const pages = Math.ceil(total / limit);
+
+    return res.status(200).json({
+      totalPages: pages,
+      products,
+    });
 
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
 
 }
+
+
 
 
 export const getProduct = async (req, res) => {
