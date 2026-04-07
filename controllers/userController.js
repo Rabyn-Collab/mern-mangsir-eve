@@ -59,3 +59,33 @@ export const register = async (req, res) => {
   }
 
 }
+
+
+
+export const getUser = async (req, res) => {
+  try {
+    const isExist = await User.findById(req.userId).select('-password');
+    if (!isExist) {
+      return res.status(404).json({ message: 'User Not Found' });
+    }
+    return res.status(200).json(isExist);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+}
+
+export const updateUser = async (req, res) => {
+  const { username, email } = req.body || {};
+  try {
+    const isExist = await User.findById(req.userId);
+    if (!isExist) {
+      return res.status(404).json({ message: 'User Not Found' });
+    }
+    isExist.username = username || isExist.username;
+    isExist.email = email || isExist.email;
+    await isExist.save();
+    return res.status(200).json({ message: 'User Updated' });
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+}

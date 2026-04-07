@@ -1,13 +1,18 @@
 import express from "express";
-import { login, register } from "../controllers/userController.js";
+import { getUser, login, register, updateUser } from "../controllers/userController.js";
 import { methodNotAllow } from "../utils/methodNotAllow.js";
+import { loginSchema, registerSchema, validator } from "../utils/validators.js";
+import { checkUser } from "../middlewares/userCheck.js";
 
 
 
 const router = express.Router();
 
-router.route('/login').post(login).all(methodNotAllow);
-router.route('/register').post(register).all(methodNotAllow);
+
+router.route('/profile').get(checkUser, getUser).patch(checkUser, updateUser).all(methodNotAllow);
+
+router.route('/login').post(validator.body(loginSchema), login).all(methodNotAllow);
+router.route('/register').post(validator.body(registerSchema), register).all(methodNotAllow);
 
 
 
