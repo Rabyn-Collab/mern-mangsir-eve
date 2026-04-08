@@ -88,6 +88,14 @@ export default function DropdownMenuUser({ user }) {
                   case 'Profile':
                     nav(`/profile`);
 
+                    break;
+
+                  case 'Admin Panel':
+                    nav(`/admin`);
+                    break;
+
+
+
                   default:
                     break;
                 }
