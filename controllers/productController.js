@@ -179,8 +179,13 @@ export const deleteProduct = async (req, res) => {
     if (!isExist) {
       return res.status(404).json({ message: 'Product Not Found' });
     }
-    await removeFile(`./uploads/${isExist.image}`, res);
+    // delete file safely
+    if (isExist.image) {
+      return await removeFile(`./uploads/${isExist.image}`, res);
+    }
+
     await isExist.deleteOne();
+
     return res.status(200).json({ message: 'Product Deleted' });
 
 
@@ -190,3 +195,5 @@ export const deleteProduct = async (req, res) => {
   }
 
 }
+
+

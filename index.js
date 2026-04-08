@@ -23,6 +23,7 @@ app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }));
 
+app.use(express.static('uploads'));
 app.use(cors({
   origin: ['http://localhost:5173'],
 }));
