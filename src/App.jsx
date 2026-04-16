@@ -9,6 +9,8 @@ import AdminPage from "./features/admin/AdminPage.jsx";
 import Add from "./features/admin/form/Add.jsx";
 import Edit from "./features/admin/form/Edit.jsx";
 import ProductDetail from "./features/products/ProductDetail.jsx";
+import OrderPage from "./features/order/OrderPage.jsx";
+import CartPage from "./features/carts/CartPage.jsx";
 
 
 export default function App() {
@@ -53,6 +55,14 @@ export default function App() {
         {
           path: 'product/:id',
           element: <ProductDetail />
+        },
+        {
+          path: 'cart',
+          element: <CartPage />
+        },
+        {
+          path: 'orders',
+          element: <OrderPage />
         }
 
 

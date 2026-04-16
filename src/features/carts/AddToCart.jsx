@@ -25,7 +25,7 @@ export default function AddToCart({ product }) {
       qty
     }));
 
-    // nav('/cart');
+    nav('/cart');
   }
 
 

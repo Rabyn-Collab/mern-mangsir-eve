@@ -94,6 +94,14 @@ export default function DropdownMenuUser({ user }) {
                     nav(`/admin`);
                     break;
 
+                  case 'Orders':
+                    nav(`/orders`);
+                    break;
+
+                  case 'Cart':
+                    nav(`/cart`);
+                    break;
+
 
 
                   default:
