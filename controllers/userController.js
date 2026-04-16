@@ -23,7 +23,9 @@ export const login = async (req, res) => {
     const token = jwt.sign({
       id: isExist._id,
       role: isExist.role
-    }, 'secret', { expiresIn: '1d' });
+    }, 'secret',
+      //{ expiresIn: '1d' }
+    );
 
     return res.status(200).json({
       role: isExist.role,
