@@ -5,13 +5,21 @@ import { Badge } from "@/components/ui/badge";
 import { base } from "../../app/mainApi.js";
 import { useNavigate, useSearchParams } from "react-router";
 import SearchProduct from "./SearchProduct.jsx";
+import { useEffect } from "react";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get("page") || 1;
   const { data, isLoading, error } = useGetProductsQuery({
     search: searchParams.get("search") ?? '',
+    page
   });
   const nav = useNavigate();
+
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [page]);
 
   // Loading UI
   if (isLoading) {
@@ -37,7 +45,7 @@ export default function Home() {
     );
   }
 
-  console.log(data);
+
 
   return (
     <div className="p-6">
@@ -100,6 +108,19 @@ export default function Home() {
           </Card>
         ))}
       </div>
+
+      {(data?.totalPages > 1 && !search) && <div className="flex my-5 pl-5 gap-5">
+        <Button
+          disabled={Number(page) === 1}
+          onClick={() => setSearchParams({ page: Number(page) - 1 })}>Prev</Button>
+        <h1>{page}</h1>
+        <Button
+
+          disabled={Number(page) === data?.numOfPages}
+          onClick={() => setSearchParams({ page: Number(page) + 1 })}>Next</Button>
+
+      </div>}
+
     </div>
   );
 }

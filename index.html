@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <title>reactjee</title>
   </head>
 
@@ -16,6 +17,18 @@
 
     </div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer
+      src="//js-na2.hs-scripts.com/245973408.js"></script>
+    <!-- End of HubSpot Embed Code -->
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ed98403-65c0-4232-b311-ff6c48706046",
+        });
+      });
+    </script>
   </body>
 
 </html>
