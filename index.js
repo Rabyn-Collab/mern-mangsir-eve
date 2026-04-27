@@ -27,7 +27,7 @@ app.use(fileUpload({
 
 app.use(express.static('uploads'));
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173', 'https://mern-mangsir-eve.vercel.app'],
 }));
 
 
